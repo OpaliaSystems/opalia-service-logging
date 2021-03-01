@@ -1,5 +1,5 @@
 
-val mScalaVersion = "2.12.8"
+val mScalaVersion = "2.12.13"
 val mInterfacesVersion = "1.0.0"
 val mCommonsVersion = "1.0.0"
 val mCrossVersion = """^(\d+\.\d+)""".r.findFirstIn(mScalaVersion).get
