@@ -50,12 +50,12 @@ lazy val `logging-impl-logback` =
       ),
 
       libraryDependencies ++= Seq(
-        "org.osgi" % "org.osgi.core" % "6.0.0" % "provided",
+        "org.osgi" % "osgi.core" % "8.0.0" % "provided",
         "org.osgi" % "org.osgi.service.component.annotations" % "1.4.0",
         "systems.opalia" %% "interfaces" % mInterfacesVersion % "provided",
         "systems.opalia" %% "commons" % mCommonsVersion excludeAll (exclusionRules: _*),
         "ch.qos.logback" % "logback-core" % "1.2.3",
         "ch.qos.logback" % "logback-classic" % "1.2.3",
-        "org.slf4j" % "slf4j-api" % "1.7.26"
+        "org.slf4j" % "slf4j-api" % "1.7.30"
       )
     )
