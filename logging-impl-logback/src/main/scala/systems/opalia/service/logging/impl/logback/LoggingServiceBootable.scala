@@ -29,11 +29,14 @@ final class LoggingServiceBootable(config: BundleConfig)
     createConfigurationFile(logbackConfigFile)
     configurator.doConfigure(logbackConfigFile.toFile)
 
-    val stdoutLogger = newLogger("STDOUT")
-    val stderrLogger = newLogger("STDERR")
+    val stdoutLogger =
+      new LoggerImpl(loggerContext.getLogger("STDOUT"), LogLevel.DEBUG).subLogger(LogLevel.INFO)
 
-    PrintStreams.stdoutBind(new LoggingOutputStream(x => stdoutLogger.log(LogLevel.INFO, x)).createPrintStream())
-    PrintStreams.stderrBind(new LoggingOutputStream(x => stderrLogger.log(LogLevel.WARNING, x)).createPrintStream())
+    val stderrLogger =
+      new LoggerImpl(loggerContext.getLogger("STDERR"), LogLevel.DEBUG).subLogger(LogLevel.WARNING)
+
+    PrintStreams.stdoutBind(new LoggingOutputStream(x => stdoutLogger(x)).createPrintStream())
+    PrintStreams.stderrBind(new LoggingOutputStream(x => stderrLogger(x)).createPrintStream())
   }
 
   protected def shutdownTask(): Unit = {
