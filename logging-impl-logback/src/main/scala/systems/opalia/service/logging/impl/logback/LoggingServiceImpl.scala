@@ -22,7 +22,7 @@ class LoggingServiceImpl
     val configurationService = serviceManager.getService(bundleContext, classOf[ConfigurationService])
     val config = new BundleConfig(configurationService.getConfiguration)
 
-    bootable = new LoggingServiceBootable(config)
+    bootable = new LoggingServiceBootable(config, mainService = true)
 
     bootable.setup()
     Await.result(bootable.awaitUp(), Duration.Inf)

@@ -4,11 +4,11 @@ import org.slf4j.{Logger => Slf4jLogger}
 import systems.opalia.interfaces.logging._
 
 
-final class LoggerImpl(logger: Slf4jLogger, level: LogLevel)
+class LoggerImpl(private[logback] val underlying: Slf4jLogger, level: LogLevel)
   extends Logger {
 
   val name: String =
-    logger.getName
+    underlying.getName
 
   val logLevel: LogLevel =
     level
@@ -19,22 +19,22 @@ final class LoggerImpl(logger: Slf4jLogger, level: LogLevel)
 
       logLevel match {
         case LogLevel.OFF =>
-        case LogLevel.ERROR => logger.error(message)
-        case LogLevel.WARNING => logger.warn(message)
-        case LogLevel.INFO => logger.info(message)
-        case LogLevel.DEBUG => logger.debug(message)
-        case LogLevel.TRACE => logger.trace(message)
+        case LogLevel.ERROR => underlying.error(message)
+        case LogLevel.WARNING => underlying.warn(message)
+        case LogLevel.INFO => underlying.info(message)
+        case LogLevel.DEBUG => underlying.debug(message)
+        case LogLevel.TRACE => underlying.trace(message)
       }
 
     } else {
 
       logLevel match {
         case LogLevel.OFF =>
-        case LogLevel.ERROR => logger.error(message, throwable)
-        case LogLevel.WARNING => logger.warn(message, throwable)
-        case LogLevel.INFO => logger.info(message, throwable)
-        case LogLevel.DEBUG => logger.debug(message, throwable)
-        case LogLevel.TRACE => logger.trace(message, throwable)
+        case LogLevel.ERROR => underlying.error(message, throwable)
+        case LogLevel.WARNING => underlying.warn(message, throwable)
+        case LogLevel.INFO => underlying.info(message, throwable)
+        case LogLevel.DEBUG => underlying.debug(message, throwable)
+        case LogLevel.TRACE => underlying.trace(message, throwable)
       }
     }
   }

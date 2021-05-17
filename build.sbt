@@ -46,11 +46,13 @@ lazy val `logging-impl-logback` =
       OsgiKeys.importPackage ++= Seq(
         "scala.*",
         "com.typesafe.config.*",
-        "systems.opalia.interfaces.*"
+        "systems.opalia.interfaces.*",
+        "org.osgi.service.log.*"
       ),
 
       libraryDependencies ++= Seq(
         "org.osgi" % "osgi.core" % "8.0.0" % "provided",
+        "org.osgi" % "org.osgi.service.log" % "1.5.0" % "provided",
         "org.osgi" % "org.osgi.service.component.annotations" % "1.4.0",
         "systems.opalia" %% "interfaces" % mInterfacesVersion % "provided",
         "systems.opalia" %% "commons" % mCommonsVersion excludeAll (exclusionRules: _*),

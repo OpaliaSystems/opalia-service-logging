@@ -10,11 +10,11 @@ import systems.opalia.interfaces.rendering.Renderer
 import systems.opalia.interfaces.soa.Bootable
 
 
-final class LoggingServiceBootable(config: BundleConfig)
+final class LoggingServiceBootable(config: BundleConfig, mainService: Boolean)
   extends LoggingService
     with Bootable[Unit, Unit] {
 
-  private val loggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
+  private lazy val loggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
 
   def newLogger(name: String): Logger =
     new LoggerImpl(loggerContext.getLogger(name), config.logLevel)
@@ -26,23 +26,32 @@ final class LoggingServiceBootable(config: BundleConfig)
 
     configurator.setContext(loggerContext)
     loggerContext.reset()
-    createConfigurationFile(logbackConfigFile)
+
+    if (mainService)
+      createConfigurationFile(logbackConfigFile)
+
     configurator.doConfigure(logbackConfigFile.toFile)
 
-    val stdoutLogger =
-      new LoggerImpl(loggerContext.getLogger("STDOUT"), LogLevel.TRACE).subLogger(LogLevel.INFO)
+    if (mainService) {
 
-    val stderrLogger =
-      new LoggerImpl(loggerContext.getLogger("STDERR"), LogLevel.TRACE).subLogger(LogLevel.WARNING)
+      val stdoutLogger =
+        new LoggerImpl(loggerContext.getLogger("STDOUT"), LogLevel.TRACE).subLogger(LogLevel.INFO)
 
-    PrintStreams.stdoutBind(new LoggingOutputStream(x => stdoutLogger(x)).createPrintStream())
-    PrintStreams.stderrBind(new LoggingOutputStream(x => stderrLogger(x)).createPrintStream())
+      val stderrLogger =
+        new LoggerImpl(loggerContext.getLogger("STDERR"), LogLevel.TRACE).subLogger(LogLevel.WARNING)
+
+      PrintStreams.stdoutBind(new LoggingOutputStream(x => stdoutLogger(x)).createPrintStream())
+      PrintStreams.stderrBind(new LoggingOutputStream(x => stderrLogger(x)).createPrintStream())
+    }
   }
 
   protected def shutdownTask(): Unit = {
 
-    PrintStreams.stdoutUnbind()
-    PrintStreams.stderrUnbind()
+    if (mainService) {
+
+      PrintStreams.stdoutUnbind()
+      PrintStreams.stderrUnbind()
+    }
 
     loggerContext.stop()
   }
