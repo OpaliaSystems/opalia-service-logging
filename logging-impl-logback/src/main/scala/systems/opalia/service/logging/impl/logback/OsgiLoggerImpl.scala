@@ -22,13 +22,13 @@ class OsgiLoggerImpl(logger: LoggerImpl)
   def trace(format: String, argument: AnyRef): Unit = {
 
     if (logger.traceEnabled)
-      logger.underlying.trace(format, argument)
+      logger.underlying.trace(format, argument: Any)
   }
 
   def trace(format: String, argument1: AnyRef, argument2: AnyRef): Unit = {
 
     if (logger.traceEnabled)
-      logger.underlying.trace(format, argument1, argument2)
+      logger.underlying.trace(format, argument1: Any, argument2: Any)
   }
 
   def trace(format: String, arguments: AnyRef*): Unit = {
@@ -55,13 +55,13 @@ class OsgiLoggerImpl(logger: LoggerImpl)
   def debug(format: String, argument: AnyRef): Unit = {
 
     if (logger.debugEnabled)
-      logger.underlying.debug(format, argument)
+      logger.underlying.debug(format, argument: Any)
   }
 
   def debug(format: String, argument1: AnyRef, argument2: AnyRef): Unit = {
 
     if (logger.debugEnabled)
-      logger.underlying.debug(format, argument1, argument2)
+      logger.underlying.debug(format, argument1: Any, argument2: Any)
   }
 
   def debug(format: String, arguments: AnyRef*): Unit = {
@@ -88,13 +88,13 @@ class OsgiLoggerImpl(logger: LoggerImpl)
   def info(format: String, argument: AnyRef): Unit = {
 
     if (logger.infoEnabled)
-      logger.underlying.info(format, argument)
+      logger.underlying.info(format, argument: Any)
   }
 
   def info(format: String, argument1: AnyRef, argument2: AnyRef): Unit = {
 
     if (logger.infoEnabled)
-      logger.underlying.info(format, argument1, argument2)
+      logger.underlying.info(format, argument1: Any, argument2: Any)
   }
 
   def info(format: String, arguments: AnyRef*): Unit = {
@@ -121,13 +121,13 @@ class OsgiLoggerImpl(logger: LoggerImpl)
   def warn(format: String, argument: AnyRef): Unit = {
 
     if (logger.warningEnabled)
-      logger.underlying.warn(format, argument)
+      logger.underlying.warn(format, argument: Any)
   }
 
   def warn(format: String, argument1: AnyRef, argument2: AnyRef): Unit = {
 
     if (logger.warningEnabled)
-      logger.underlying.warn(format, argument1, argument2)
+      logger.underlying.warn(format, argument1: Any, argument2: Any)
   }
 
   def warn(format: String, arguments: AnyRef*): Unit = {
@@ -154,13 +154,13 @@ class OsgiLoggerImpl(logger: LoggerImpl)
   def error(format: String, argument: AnyRef): Unit = {
 
     if (logger.errorEnabled)
-      logger.underlying.error(format, argument)
+      logger.underlying.error(format, argument: Any)
   }
 
   def error(format: String, argument1: AnyRef, argument2: AnyRef): Unit = {
 
     if (logger.errorEnabled)
-      logger.underlying.error(format, argument1, argument2)
+      logger.underlying.error(format, argument1: Any, argument2: Any)
   }
 
   def error(format: String, arguments: AnyRef*): Unit = {
