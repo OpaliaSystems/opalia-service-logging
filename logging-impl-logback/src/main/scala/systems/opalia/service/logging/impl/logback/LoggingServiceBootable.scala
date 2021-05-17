@@ -30,10 +30,10 @@ final class LoggingServiceBootable(config: BundleConfig)
     configurator.doConfigure(logbackConfigFile.toFile)
 
     val stdoutLogger =
-      new LoggerImpl(loggerContext.getLogger("STDOUT"), LogLevel.DEBUG).subLogger(LogLevel.INFO)
+      new LoggerImpl(loggerContext.getLogger("STDOUT"), LogLevel.TRACE).subLogger(LogLevel.INFO)
 
     val stderrLogger =
-      new LoggerImpl(loggerContext.getLogger("STDERR"), LogLevel.DEBUG).subLogger(LogLevel.WARNING)
+      new LoggerImpl(loggerContext.getLogger("STDERR"), LogLevel.TRACE).subLogger(LogLevel.WARNING)
 
     PrintStreams.stdoutBind(new LoggingOutputStream(x => stdoutLogger(x)).createPrintStream())
     PrintStreams.stderrBind(new LoggingOutputStream(x => stderrLogger(x)).createPrintStream())

@@ -18,7 +18,9 @@ public class StdoutPrintStreamAppender
             @Override
             public FilterReply decide(ILoggingEvent event) {
 
-                if (event.getLevel().equals(Level.DEBUG) || event.getLevel().equals(Level.INFO))
+                if (event.getLevel().equals(Level.TRACE) ||
+                        event.getLevel().equals(Level.DEBUG) ||
+                        event.getLevel().equals(Level.INFO))
                     return FilterReply.ACCEPT;
                 else
                     return FilterReply.DENY;

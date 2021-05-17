@@ -18,7 +18,8 @@ public class StderrPrintStreamAppender
             @Override
             public FilterReply decide(ILoggingEvent event) {
 
-                if (event.getLevel().equals(Level.WARN) || event.getLevel().equals(Level.ERROR))
+                if (event.getLevel().equals(Level.WARN) ||
+                        event.getLevel().equals(Level.ERROR))
                     return FilterReply.ACCEPT;
                 else
                     return FilterReply.DENY;

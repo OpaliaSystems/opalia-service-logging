@@ -23,6 +23,7 @@ final class LoggerImpl(logger: Slf4jLogger, level: LogLevel)
         case LogLevel.WARNING => logger.warn(message)
         case LogLevel.INFO => logger.info(message)
         case LogLevel.DEBUG => logger.debug(message)
+        case LogLevel.TRACE => logger.trace(message)
       }
 
     } else {
@@ -33,6 +34,7 @@ final class LoggerImpl(logger: Slf4jLogger, level: LogLevel)
         case LogLevel.WARNING => logger.warn(message, throwable)
         case LogLevel.INFO => logger.info(message, throwable)
         case LogLevel.DEBUG => logger.debug(message, throwable)
+        case LogLevel.TRACE => logger.trace(message, throwable)
       }
     }
   }
