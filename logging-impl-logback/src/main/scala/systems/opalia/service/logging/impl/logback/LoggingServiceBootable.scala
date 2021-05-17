@@ -34,14 +34,21 @@ final class LoggingServiceBootable(config: BundleConfig, mainService: Boolean)
 
     if (mainService) {
 
-      val stdoutLogger =
-        new LoggerImpl(loggerContext.getLogger("STDOUT"), LogLevel.TRACE).subLogger(LogLevel.INFO)
+      if (config.stdoutCapturing) {
 
-      val stderrLogger =
-        new LoggerImpl(loggerContext.getLogger("STDERR"), LogLevel.TRACE).subLogger(LogLevel.WARNING)
+        val stdoutLogger =
+          new LoggerImpl(loggerContext.getLogger("STDOUT"), LogLevel.TRACE).subLogger(LogLevel.INFO)
 
-      PrintStreams.stdoutBind(new LoggingOutputStream(x => stdoutLogger(x)).createPrintStream())
-      PrintStreams.stderrBind(new LoggingOutputStream(x => stderrLogger(x)).createPrintStream())
+        PrintStreams.stdoutBind(new LoggingOutputStream(x => stdoutLogger(x)).createPrintStream())
+      }
+
+      if (config.stderrCapturing) {
+
+        val stderrLogger =
+          new LoggerImpl(loggerContext.getLogger("STDERR"), LogLevel.TRACE).subLogger(LogLevel.WARNING)
+
+        PrintStreams.stderrBind(new LoggingOutputStream(x => stderrLogger(x)).createPrintStream())
+      }
     }
   }
 
@@ -49,8 +56,11 @@ final class LoggingServiceBootable(config: BundleConfig, mainService: Boolean)
 
     if (mainService) {
 
-      PrintStreams.stdoutUnbind()
-      PrintStreams.stderrUnbind()
+      if (config.stdoutCapturing)
+        PrintStreams.stdoutUnbind()
+
+      if (config.stderrCapturing)
+        PrintStreams.stderrUnbind()
     }
 
     loggerContext.stop()

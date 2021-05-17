@@ -16,6 +16,9 @@ final class BundleConfig(config: Config) {
 
   val deploymentPath: Path = config.as[Path]("log.deployment-path").normalize()
 
+  val stdoutCapturing: Boolean = config.as[Option[Boolean]]("log.capture-stdout").getOrElse(false)
+  val stderrCapturing: Boolean = config.as[Option[Boolean]]("log.capture-stderr").getOrElse(false)
+
   val sinks: List[BundleConfig.Sink] =
     config.as[List[Config]]("log.sinks")
       .map {
